@@ -457,7 +457,7 @@ void testFindMeetingPoint() {
     }
   }
 
-  printf("\n--- should be 1 ---\n"); 
+  printf("\n--- should be 1 ---\n");
   meetingNode = findMeetingPoint(list1, list1);
   printf("meetingNode: %d\n", meetingNode);
   if (meetingNode != NULL) {
@@ -492,6 +492,97 @@ void testFindMeetingPoint() {
   }
 }
 
+// 3-24: 連結リストの中央を見つけよ
+List* findMedianOf(List *head) {
+  int len = 1;
+  List *node = head;
+  while (node -> next) {
+    len ++;
+    node = node -> next;
+  }
+
+  int middle = (int) len / 2;
+  if (len % 2 == 1) {
+    middle ++;
+  }
+  node = head;
+  for (int i = 0; i < middle-1; i++) {
+    node = node -> next;
+  }
+  return node;
+}
+
+// (効率的実装)
+List* findMedianOf2(List *head) {
+  List *fastNode = head;
+  List *slowNode = head;
+  int cnt = 0;
+  while (fastNode -> next) {
+    fastNode = fastNode -> next;
+    if (cnt % 2 == 1) {
+      slowNode = slowNode -> next;
+    }
+    cnt ++;
+  }
+  return slowNode;
+}
+
+void testFindMedianOf(){
+  List *list = range(1,10,1);  // [1,2,3,4,5,6,7,8,9]
+  List *middle = findMedianOf(list);
+  printf("%d\n", middle -> data);
+  if (5 == middle -> data) {
+    printf("Test is ok\n");
+  }
+
+  List *list2 = range(1,1,1);  // [1]
+  List *middle2 = findMedianOf(list2);
+  printf("%d\n", middle2 -> data);
+  if (1 == middle2 -> data) {
+    printf("Test is ok\n");
+  }
+
+  List *list3 = range(1,11,1);  // [1,2,3,4,5,6,7,8,9,10]
+  List *middle3 = findMedianOf(list3);
+  printf("%d\n", middle3 -> data);
+  if (5 == middle3 -> data) {
+    printf("Test is ok\n");
+  } else {
+    printf("Test failed\n");
+  }
+  return;
+}
+
+void testFindMedianOf2(){
+  List *list = range(1,10,1);  // [1,2,3,4,5,6,7,8,9]
+  List *middle = findMedianOf2(list);
+  printf("%d\n", middle -> data);
+  if (5 == middle -> data) {
+    printf("Test is ok\n");
+  } else {
+    printf("Test failed\n");
+  }
+
+  List *list2 = range(1,1,1);  // [1]
+  List *middle2 = findMedianOf2(list2);
+  printf("%d\n", middle2 -> data);
+  if (1 == middle2 -> data) {
+    printf("Test is ok\n");
+  } else {
+    printf("Test failed\n");
+  }
+
+  List *list3 = range(1,11,1);  // [1,2,3,4,5,6,7,8,9,10]
+  List *middle3 = findMedianOf2(list3);
+  printf("%d\n", middle3 -> data);
+  if (5 == middle3 -> data) {
+    printf("Test is ok\n");
+  } else {
+    printf("Test failed\n");
+  }
+  return;
+}
+
 void main(){
   // List *list = null_case();
   // List *node = (List *) calloc(1, sizeof(List));
@@ -499,6 +590,7 @@ void main(){
   // int len = loopLengthOf(list);
   // testReverseSingleLinkedList();
   // testRecursiveReverseSingleLinkedList();
-  testFindMeetingPoint();
-
+  // testFindMeetingPoint();
+  // testFindMedianOf();
+  // testFindMedianOf2();
 }
